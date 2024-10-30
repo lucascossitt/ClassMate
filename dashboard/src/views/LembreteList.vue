@@ -1,15 +1,15 @@
 <template>
     <div>
-        <LembreteList />
+        <LembreteList/>
     </div>
 </template>
 
 <script>
-import LembreteList from '../components/LembreteList.vue';
+import LembreteList from '../components/LembreteList.vue'
 
 export default {
     components: {
         LembreteList,
     },
-};
+}
 </script>

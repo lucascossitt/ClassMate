@@ -1,16 +1,16 @@
 <template>
     <div class="container my-5 p-4 border rounded shadow-sm bg-light">
         <h2 class="mb-4 text-center">Editar Wiki</h2>
-        <form @submit.prevent="handleUpdate" class="needs-validation" novalidate>
+        <form class="needs-validation" novalidate @submit.prevent="handleUpdate">
             <div class="mb-3">
-                <label for="titulo" class="form-label">Título</label>
+                <label class="form-label" for="titulo">Título</label>
                 <input
-                    type="text"
-                    v-model="titulo"
-                    required
-                    class="form-control"
                     id="titulo"
+                    v-model="titulo"
+                    class="form-control"
                     placeholder="Digite o título da wiki"
+                    required
+                    type="text"
                 />
                 <div class="invalid-feedback">
                     Por favor, insira o título.
@@ -18,14 +18,14 @@
             </div>
 
             <div class="mb-3">
-                <label for="conteudo" class="form-label">Conteúdo</label>
+                <label class="form-label" for="conteudo">Conteúdo</label>
                 <textarea
                     id="conteudo"
                     v-model="conteudo"
-                    rows="5"
-                    required
                     class="form-control"
                     placeholder="Digite o conteúdo da wiki"
+                    required
+                    rows="5"
                 ></textarea>
                 <div class="invalid-feedback">
                     Por favor, insira o conteúdo.
@@ -33,13 +33,13 @@
             </div>
 
             <div class="mb-3">
-                <label for="turmaId" class="form-label">Selecionar Turma</label>
+                <label class="form-label" for="turmaId">Selecionar Turma</label>
                 <select
+                    id="turmaId"
                     v-model="turmaId"
-                    required
                     class="form-select"
-                    id="turmaId">
-                    <option value="" disabled>Selecione uma turma</option>
+                    required>
+                    <option disabled value="">Selecione uma turma</option>
                     <option v-for="turma in turmas" :key="turma._id" :value="turma._id">
                         {{ turma.nome }}
                     </option>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="d-grid gap-2 mt-4">
-                <button type="submit" class="btn btn-primary btn-lg">Atualizar Wiki</button>
+                <button class="btn btn-primary btn-lg" type="submit">Atualizar Wiki</button>
             </div>
         </form>
 
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import api from '../services/api';
+import api from '../services/api'
 
 export default {
     props: ['id'],
@@ -70,31 +70,31 @@ export default {
             turmaId: '',
             turmas: [],
             mensagem: ''
-        };
+        }
     },
     async created() {
-        await this.carregarWiki();
-        await this.carregarTurmas();
+        await this.carregarWiki()
+        await this.carregarTurmas()
     },
     methods: {
         async carregarWiki() {
             try {
-                const response = await api.get(`/wiki/${this.id}`);
-                const wiki = response.data;
-                this.titulo = wiki.titulo;
-                this.conteudo = wiki.conteudo;
-                this.turmaId = wiki.turma?._id;
+                const response = await api.get(`/wiki/${this.id}`)
+                const wiki = response.data
+                this.titulo = wiki.titulo
+                this.conteudo = wiki.conteudo
+                this.turmaId = wiki.turma?._id
             } catch (error) {
-                console.error('Erro ao carregar wiki:', error);
-                this.mensagem = 'Erro ao carregar wiki.';
+                console.error('Erro ao carregar wiki:', error)
+                this.mensagem = 'Erro ao carregar wiki.'
             }
         },
         async carregarTurmas() {
             try {
-                const response = await api.get('/turma');
-                this.turmas = response.data;
+                const response = await api.get('/turma')
+                this.turmas = response.data
             } catch (error) {
-                console.error('Erro ao carregar turmas:', error);
+                console.error('Erro ao carregar turmas:', error)
             }
         },
         async handleUpdate() {
@@ -103,17 +103,19 @@ export default {
                     titulo: this.titulo,
                     conteudo: this.conteudo,
                     turma: this.turmaId
-                };
-                await api.put(`/wiki/${this.id}`, wikiAtualizada);
-                this.mensagem = 'Wiki atualizada com sucesso!';
-                this.$router.push({ name: 'WikiList' });
+                }
+                await api.put(`/wiki/${this.id}`, wikiAtualizada)
+                this.mensagem = 'Wiki atualizada com sucesso!'
+                setTimeout(() => {
+                    this.$router.push({name: 'WikiList'})
+                }, 1500)
             } catch (error) {
-                console.error('Erro ao atualizar wiki:', error);
-                this.mensagem = 'Erro ao atualizar wiki. Tente novamente.';
+                console.error('Erro ao atualizar wiki:', error)
+                this.mensagem = 'Erro ao atualizar wiki. Tente novamente.'
             }
         }
     }
-};
+}
 </script>
 
 <style scoped>

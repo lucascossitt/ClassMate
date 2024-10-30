@@ -6,7 +6,15 @@ const GrupoSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    nome: {
+        type: String,
+        required: true,
+    },
     termoPesquisaLaboratorio: {
+        type: String,
+        required: false,
+    },
+    anotacoes: {
         type: String,
         required: false,
     },

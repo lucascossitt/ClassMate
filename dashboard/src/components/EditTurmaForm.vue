@@ -1,16 +1,16 @@
 <template>
     <div class="container my-5 p-4 border rounded shadow-sm bg-light">
         <h2 class="mb-4 text-center">Editar Turma</h2>
-        <form @submit.prevent="handleUpdate" class="needs-validation" novalidate>
+        <form class="needs-validation" novalidate @submit.prevent="handleUpdate">
             <div class="mb-3">
-                <label for="nome" class="form-label">Nome da Turma</label>
+                <label class="form-label" for="nome">Nome da Turma</label>
                 <input
-                    type="text"
-                    v-model="nome"
-                    required
-                    class="form-control"
                     id="nome"
+                    v-model="nome"
+                    class="form-control"
                     placeholder="Digite o nome da turma"
+                    required
+                    type="text"
                 />
                 <div class="invalid-feedback">
                     Por favor, insira o nome da turma.
@@ -22,13 +22,13 @@
                 <h4 class="text-secondary">{{ dia.label }}</h4>
 
                 <div class="mb-3">
-                    <label for="primeiroHorario" class="form-label">Primeiro Horário</label>
+                    <label class="form-label" for="primeiroHorario">Primeiro Horário</label>
                     <input
-                        type="text"
                         v-model="horarios[dia.key].primeiroHorario"
                         class="form-control"
                         placeholder="Ex: Matemática"
                         required
+                        type="text"
                     />
                     <div class="invalid-feedback">
                         Por favor, insira o primeiro horário.
@@ -36,13 +36,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="segundoHorario" class="form-label">Segundo Horário</label>
+                    <label class="form-label" for="segundoHorario">Segundo Horário</label>
                     <input
-                        type="text"
                         v-model="horarios[dia.key].segundoHorario"
                         class="form-control"
                         placeholder="Ex: Física"
                         required
+                        type="text"
                     />
                     <div class="invalid-feedback">
                         Por favor, insira o segundo horário.
@@ -51,7 +51,7 @@
             </div>
 
             <div class="d-grid gap-2 mt-4">
-                <button type="submit" class="btn btn-primary btn-lg">Atualizar Turma</button>
+                <button class="btn btn-primary btn-lg" type="submit">Atualizar Turma</button>
             </div>
         </form>
 
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import api from '../services/api';
+import api from '../services/api'
 
 export default {
     props: ['id'],
@@ -68,35 +68,35 @@ export default {
         return {
             nome: '',
             horarios: {
-                segunda: { primeiroHorario: '', segundoHorario: '' },
-                terca: { primeiroHorario: '', segundoHorario: '' },
-                quarta: { primeiroHorario: '', segundoHorario: '' },
-                quinta: { primeiroHorario: '', segundoHorario: '' },
-                sexta: { primeiroHorario: '', segundoHorario: '' },
+                segunda: {primeiroHorario: '', segundoHorario: ''},
+                terca: {primeiroHorario: '', segundoHorario: ''},
+                quarta: {primeiroHorario: '', segundoHorario: ''},
+                quinta: {primeiroHorario: '', segundoHorario: ''},
+                sexta: {primeiroHorario: '', segundoHorario: ''},
             },
             mensagem: '',
             diasSemana: [
-                { key: 'segunda', label: 'Segunda-feira' },
-                { key: 'terca', label: 'Terça-feira' },
-                { key: 'quarta', label: 'Quarta-feira' },
-                { key: 'quinta', label: 'Quinta-feira' },
-                { key: 'sexta', label: 'Sexta-feira' },
+                {key: 'segunda', label: 'Segunda-feira'},
+                {key: 'terca', label: 'Terça-feira'},
+                {key: 'quarta', label: 'Quarta-feira'},
+                {key: 'quinta', label: 'Quinta-feira'},
+                {key: 'sexta', label: 'Sexta-feira'},
             ]
-        };
+        }
     },
     async created() {
-        await this.carregarTurma();
+        await this.carregarTurma()
     },
     methods: {
         async carregarTurma() {
             try {
-                const response = await api.get(`/turma/${this.id}`);
-                const turma = response.data;
-                this.nome = turma.nome;
-                this.horarios = turma.horarios || this.horarios;  // Garante que carrega os horários ou usa o padrão
+                const response = await api.get(`/turma/${this.id}`)
+                const turma = response.data
+                this.nome = turma.nome
+                this.horarios = turma.horarios || this.horarios  
             } catch (error) {
-                console.error('Erro ao carregar turma:', error);
-                this.mensagem = 'Erro ao carregar turma.';
+                console.error('Erro ao carregar turma:', error)
+                this.mensagem = 'Erro ao carregar turma.'
             }
         },
         async handleUpdate() {
@@ -104,17 +104,19 @@ export default {
                 const turmaAtualizada = {
                     nome: this.nome,
                     horarios: this.horarios
-                };
-                await api.put(`/turma/${this.id}`, turmaAtualizada);
-                this.mensagem = 'Turma atualizada com sucesso!';
-                this.$router.push({ name: 'TurmaList' });
+                }
+                await api.put(`/turma/${this.id}`, turmaAtualizada)
+                this.mensagem = 'Turma atualizada com sucesso!'
+                setTimeout(() => {
+                    this.$router.push({name: 'TurmaList'})
+                }, 1500)
             } catch (error) {
-                console.error('Erro ao atualizar turma:', error);
-                this.mensagem = 'Erro ao atualizar turma. Tente novamente.';
+                console.error('Erro ao atualizar turma:', error)
+                this.mensagem = 'Erro ao atualizar turma. Tente novamente.'
             }
         }
     }
-};
+}
 </script>
 
 <style scoped>

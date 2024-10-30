@@ -26,11 +26,18 @@ client.on('ready', async function () {
         try {
             const grupoDb = await GrupoModel.findOne({id: grupo.id._serialized})
             if (!grupoDb) {
-                const result = await GrupoModel.create({id: grupo.id._serialized})
+                const result = await GrupoModel.create({
+                    id: grupo.id._serialized,
+                    nome: grupo.name
+                })
                 console.log(`Grupo ${grupo.name} adicionado no banco de dados`, result)
+            } else if (grupoDb.nome !== grupo.name) {
+                grupoDb.nome = grupo.name
+                await grupoDb.save()
+                console.log(`Nome do grupo ${grupo.name} atualizado no banco de dados`)
             }
         } catch (err) {
-            console.error('Erro ao cadastrar grupo', err, chat)
+            console.error('Erro ao cadastrar grupo', err, grupo)
         }
     }))
 
@@ -58,7 +65,10 @@ client.on('group_join', async function (data) {
             const grupo = await data.getChat()
             const grupoDb = await GrupoModel.findOne({id: grupo.id._serialized})
             if (!grupoDb) {
-                const result = await GrupoModel.create({id: grupo.id._serialized})
+                const result = await GrupoModel.create({
+                    id: grupo.id._serialized,
+                    nome: grupo.name
+                })
                 console.log(`Grupo ${grupo.name} adicionado no banco de dados`, result)
             }
         }
@@ -75,9 +85,7 @@ client.on('message', async function (message) {
     client.botInfo.messageCount++
 })
 
-client.initialize().then(() => console.log('Inicializado'))
-
-// ------------------------------------------------------- API
+//--------------------------------------------------- API
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
@@ -86,6 +94,7 @@ const bodyParser = require('body-parser')
 const turmaRouter = require('./routes/turma')
 const wikiRouter = require('./routes/wiki')
 const lembreteRouter = require('./routes/lembrete')
+const grupoRouter = require('./routes/grupo')
 
 const app = express()
 app.use(cors())
@@ -96,6 +105,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use('/turma', turmaRouter)
 app.use('/wiki', wikiRouter)
 app.use('/lembrete', lembreteRouter)
+app.use('/grupo', grupoRouter)
 
 app.get('/', async function (req, res) {
     res.status(200).send('Online')

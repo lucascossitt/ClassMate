@@ -1,15 +1,15 @@
 <template>
     <div>
-        <TurmaForm />
+        <TurmaForm/>
     </div>
 </template>
 
 <script>
-import TurmaForm from '../components/TurmaForm.vue';
+import TurmaForm from '../components/TurmaForm.vue'
 
 export default {
     components: {
         TurmaForm,
     },
-};
+}
 </script>

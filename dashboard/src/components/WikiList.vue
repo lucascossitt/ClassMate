@@ -18,8 +18,8 @@
                 <td>{{ formatarData(wiki.dataCriacao) }}</td>
                 <td>{{ wiki.turma ? wiki.turma.nome : 'Não associada' }}</td>
                 <td>
-                    <div class="btn-group" role="group" aria-label="Ações da wiki">
-                        <button @click="excluirWiki(wiki._id)" class="btn btn-danger btn-sm" title="Excluir Wiki">
+                    <div aria-label="Ações da wiki" class="btn-group" role="group">
+                        <button class="btn btn-danger btn-sm" title="Excluir Wiki" @click="excluirWiki(wiki._id)">
                             <i class="bi bi-trash"></i>
                         </button>
                         <router-link :to="{ name: 'EditWiki', params: { id: wiki._id } }">
@@ -38,55 +38,55 @@
 </template>
 
 <script>
-import api from '../services/api';
+import api from '../services/api'
 
 export default {
     data() {
         return {
             wikis: [],
             mensagem: '',
-        };
+        }
     },
     async created() {
-        const turmaId = this.$route.query.turmaId;
-        await this.carregarWikis(turmaId);
+        const turmaId = this.$route.query.turmaId
+        await this.carregarWikis(turmaId)
     },
     methods: {
         async carregarWikis(turmaId) {
             try {
                 const response = await api.get('/wiki', {
-                    params: turmaId ? { turmaId: turmaId } : {}
-                });
-                this.wikis = response.data;
+                    params: turmaId ? {turmaId: turmaId} : {}
+                })
+                this.wikis = response.data
             } catch (error) {
-                console.error('Erro ao carregar wikis:', error);
-                this.mensagem = 'Erro ao carregar wikis. Tente novamente.';
+                console.error('Erro ao carregar wikis:', error)
+                this.mensagem = 'Erro ao carregar wikis. Tente novamente.'
             }
         },
         async excluirWiki(id) {
             if (confirm('Tem certeza que deseja excluir esta wiki?')) {
                 try {
-                    await api.delete(`/wiki/${id}`);
-                    this.mensagem = 'Wiki excluída com sucesso.';
-                    this.wikis = this.wikis.filter(wiki => wiki._id !== id);
+                    await api.delete(`/wiki/${id}`)
+                    this.mensagem = 'Wiki excluída com sucesso.'
+                    this.wikis = this.wikis.filter(wiki => wiki._id !== id)
                 } catch (error) {
-                    console.error('Erro ao excluir wiki:', error);
-                    this.mensagem = 'Erro ao excluir wiki. Tente novamente.';
+                    console.error('Erro ao excluir wiki:', error)
+                    this.mensagem = 'Erro ao excluir wiki. Tente novamente.'
                 }
             }
         },
         formatarData(dataCriacao) {
-            const data = new Date(dataCriacao);
-            return data.toLocaleDateString('pt-BR');
+            const data = new Date(dataCriacao)
+            return data.toLocaleDateString('pt-BR')
         },
     },
     watch: {
         '$route.query.turmaId': {
             immediate: true,
             handler(newId) {
-                this.carregarWikis(newId);
+                this.carregarWikis(newId)
             }
         }
     }
-};
+}
 </script>

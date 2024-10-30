@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import api from '../services/api';
+import api from '../services/api'
 
 export default {
     data() {
@@ -68,10 +68,10 @@ export default {
             turmaId: '',
             turmas: [],
             mensagemFeedback: ''
-        };
+        }
     },
     async created() {
-        await this.carregarTurmas();
+        await this.carregarTurmas()
     },
     methods: {
         async handleSubmit() {
@@ -80,25 +80,27 @@ export default {
                     mensagem: this.mensagem,
                     dataHora: this.dataHora,
                     turma: this.turmaId
-                };
-                await api.post('/lembrete', novoLembrete);
-                this.mensagemFeedback = 'Lembrete cadastrado com sucesso!';
-                this.$router.push({ name: 'LembreteList' });
+                }
+                await api.post('/lembrete', novoLembrete)
+                this.mensagemFeedback = 'Lembrete cadastrado com sucesso!'
+                setTimeout(() => {
+                    this.$router.push({name: 'LembreteList'})
+                }, 1500)
             } catch (error) {
-                console.error('Erro ao cadastrar lembrete:', error);
-                this.mensagemFeedback = 'Erro ao cadastrar lembrete. Tente novamente.';
+                console.error('Erro ao cadastrar lembrete:', error)
+                this.mensagemFeedback = 'Erro ao cadastrar lembrete. Tente novamente.'
             }
         },
         async carregarTurmas() {
             try {
-                const response = await api.get('/turma');
-                this.turmas = response.data;
+                const response = await api.get('/turma')
+                this.turmas = response.data
             } catch (error) {
-                console.error('Erro ao carregar turmas:', error);
+                console.error('Erro ao carregar turmas:', error)
             }
         }
     }
-};
+}
 </script>
 
 <style scoped>

@@ -1,15 +1,15 @@
 <template>
     <div>
-        <TurmaList/>
+        <GrupoList/>
     </div>
 </template>
 
 <script>
-import TurmaList from '../components/TurmaList.vue'
+import GrupoList from '../components/GrupoList.vue'
 
 export default {
     components: {
-        TurmaList,
+        GrupoList,
     },
 }
 </script>

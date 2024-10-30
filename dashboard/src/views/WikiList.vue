@@ -1,15 +1,15 @@
 <template>
     <div>
-        <WikiList />
+        <WikiList/>
     </div>
 </template>
 
 <script>
-import WikiList from '../components/WikiList.vue';
+import WikiList from '../components/WikiList.vue'
 
 export default {
     components: {
         WikiList,
     },
-};
+}
 </script>

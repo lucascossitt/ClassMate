@@ -1,15 +1,15 @@
 <template>
     <div>
-        <WikiForm />
+        <WikiForm/>
     </div>
 </template>
 
 <script>
-import WikiForm from '../components/WikiForm.vue';
+import WikiForm from '../components/WikiForm.vue'
 
 export default {
     components: {
         WikiForm,
     },
-};
+}
 </script>

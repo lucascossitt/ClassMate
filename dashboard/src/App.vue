@@ -1,16 +1,18 @@
 <template>
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
-            <div class="container-fluid"> <!-- Alterado para remover espaço -->
+            <div class="container-fluid">
                 <router-link class="navbar-brand ms-2" to="/">ClassMate</router-link>
-
-                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
                         data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div id="navbarNav" class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/grupos">Grupos</router-link>
+                        </li>
                         <li class="nav-item">
                             <router-link class="nav-link" to="/turmas">Turmas</router-link>
                         </li>
@@ -21,7 +23,6 @@
                             <router-link class="nav-link" to="/wikis">Wikis</router-link>
                         </li>
                     </ul>
-                    <!-- User Menu on the Right Side -->
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
                             <a
@@ -60,11 +61,11 @@ export default {
     name: 'App',
     methods: {
         logout() {
-            console.log("Usuário deslogado.");
-            this.$router.push('/login');
+            console.log("Usuário deslogado.")
+            this.$router.push('/login')
         }
     }
-};
+}
 </script>
 
 <style scoped>
@@ -81,9 +82,9 @@ export default {
 }
 
 .nav-link.router-link-active {
-    font-weight: bold; /* Destaca o link ativo */
-    color: #ffffff; /* Ajuste a cor como preferir */
-    background-color: #495057; /* Fundo para realce (opcional) */
-    border-radius: 5px; /* Arredondamento opcional */
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #495057;
+    border-radius: 5px;
 }
 </style>
