@@ -46,12 +46,8 @@ class ReminderHandler {
     async cleanupOldReminders() {
         try {
             const now = new Date()
-
-            const retentionPeriod = 30 * 24 * 60 * 60 * 1000
-            const cutoffDate = new Date(now.getTime() - retentionPeriod)
-
             const result = await LembreteModel.deleteMany({
-                dataHora: {$lt: cutoffDate}
+                dataHora: {$lt: now}
             })
 
             logger.info(`Lembretes antigos removidos do banco de dados: ${result.deletedCount}`)
