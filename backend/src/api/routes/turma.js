@@ -1,5 +1,5 @@
 const express = require('express')
-const Turma = require('../models/Turma')
+const Turma = require('../../models/turma.model')
 const router = express.Router()
 
 router.post('/', async (req, res) => {

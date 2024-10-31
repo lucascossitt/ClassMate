@@ -33,6 +33,12 @@
         </table>
         <p v-else class="text-center mt-3">Nenhum lembrete cadastrado.</p>
         <p v-if="mensagem" class="alert alert-info mt-3">{{ mensagem }}</p>
+
+        <router-link :to="{ name: 'LembreteForm' }">
+            <button class="btn btn-success btn-lg rounded-circle floating-button" title="Criar nova Wiki">
+                <i class="bi bi-plus"></i>
+            </button>
+        </router-link>
     </div>
 </template>
 
@@ -93,5 +99,12 @@ export default {
 <style scoped>
 .container {
     max-width: 800px;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 </style>

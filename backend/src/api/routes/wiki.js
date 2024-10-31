@@ -1,5 +1,5 @@
 const express = require('express')
-const Wiki = require('../models/Wiki')
+const Wiki = require('../../models/wiki.model')
 const router = express.Router()
 
 router.post('/', async (req, res) => {

@@ -16,65 +16,59 @@
                 </div>
             </div>
         </div>
-        <div v-if="botInfo" class="whatsapp-info bg-light p-4 rounded shadow-sm text-center">
-            <h3>Status do Bot do WhatsApp</h3>
-            <p><strong>Grupos Ativos:</strong> {{ botInfo.groupCount }}</p>
-            <p><strong>Mensagens Enviadas:</strong> {{ botInfo.messageCount }}</p>
-            <p><strong>State:</strong> {{ botInfo.state }}</p>
-            <p><strong>Tempo de Atividade:</strong> {{ formatUptime(botInfo.uptime) }}</p>
-        </div>
     </div>
 </template>
 
 <script>
+import api from '../services/api'
+
 export default {
     data() {
         return {
-            navigationCards: [
+            stats: { grupoCount: 0, lembreteCount: 0, turmaCount: 0, wikiCount: 0 }
+        }
+    },
+    mounted() {
+        this.fetchStats()
+    },
+    computed: {
+        navigationCards() {
+            return [
                 {
-                    title: 'Grupos',
+                    title: `${this.stats.grupoCount} Grupos`,
                     icon: 'bi bi-whatsapp',
                     description: 'Gerencie os grupos do WhatsApp e suas vinculações.',
                     link: '/grupos'
                 },
                 {
-                    title: 'Turmas',
+                    title: `${this.stats.turmaCount} Turmas`,
                     icon: 'bi bi-people',
                     description: 'Acesse todas as turmas e organize suas atividades.',
                     link: '/turmas'
                 },
                 {
-                    title: 'Wikis',
+                    title: `${this.stats.wikiCount} Wikis`,
                     icon: 'bi bi-journal-text',
                     description: 'Visualize e edite o conteúdo colaborativo das turmas.',
                     link: '/wikis'
                 },
                 {
-                    title: 'Lembretes',
+                    title: `${this.stats.lembreteCount} Lembretes`,
                     icon: 'bi bi-bell',
                     description: 'Gerencie e consulte lembretes importantes.',
                     link: '/lembretes'
                 }
-            ],
-            botInfo: null
+            ]
         }
     },
-    mounted() {
-        this.fetchBotInfo()
-    },
     methods: {
-        async fetchBotInfo() {
+        async fetchStats() {
             try {
-                const response = await fetch('/whatsapp-infos')
-                this.botInfo = await response.json()
+                const response = await api.get('/stats')
+                this.stats = await response.data
             } catch (error) {
-                console.error('Erro ao buscar informações do bot do WhatsApp:', error)
+                console.error('Erro ao buscar informações dos stats:', error)
             }
-        },
-        formatUptime(seconds) {
-            const hours = Math.floor(seconds / 3600)
-            const minutes = Math.floor((seconds % 3600) / 60)
-            return `${hours}h ${minutes}m`
         }
     }
 }

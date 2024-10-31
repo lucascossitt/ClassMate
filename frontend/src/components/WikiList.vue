@@ -34,6 +34,13 @@
         </table>
         <p v-else class="text-center mt-3">Nenhuma wiki cadastrada.</p>
         <p v-if="mensagem" class="alert alert-info mt-3">{{ mensagem }}</p>
+
+        <!-- Botão Flutuante -->
+        <router-link :to="{ name: 'WikiForm' }">
+            <button class="btn btn-success btn-lg rounded-circle floating-button" title="Criar nova Wiki">
+                <i class="bi bi-plus"></i>
+            </button>
+        </router-link>
     </div>
 </template>
 
@@ -90,3 +97,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+</style>

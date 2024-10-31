@@ -40,6 +40,12 @@
             </tbody>
         </table>
         <p v-else class="text-center mt-3">Nenhuma turma cadastrada.</p>
+
+        <router-link :to="{ name: 'TurmaForm' }">
+            <button class="btn btn-success btn-lg rounded-circle floating-button" title="Criar nova Wiki">
+                <i class="bi bi-plus"></i>
+            </button>
+        </router-link>
     </div>
 </template>
 
@@ -101,5 +107,12 @@ export default {
 <style scoped>
 .container {
     max-width: 800px;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 </style>

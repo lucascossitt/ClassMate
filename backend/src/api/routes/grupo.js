@@ -1,5 +1,5 @@
 const express = require('express')
-const Grupo = require('../models/Grupo')
+const Grupo = require('../../models/grupo.model')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
